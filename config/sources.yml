@@ -1,0 +1,18 @@
+# Fixture mode is the default and requires no network access or credentials.
+# In live mode, enabled Greenhouse/Lever entries are fetched from their public APIs.
+sources:
+  - name: portfolio_demo
+    type: fixture
+    path: data/fixtures/jobs.json
+    enabled: true
+
+  # Example live sources. Verify each organization token before enabling it.
+  # - name: example_greenhouse
+  #   type: greenhouse
+  #   board_token: organization-board-token
+  #   enabled: true
+  # - name: example_lever
+  #   type: lever
+  #   site: organization-site-token
+  #   enabled: true
+

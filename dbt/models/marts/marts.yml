@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: mart_hiring_overview
+    description: BI-ready hiring counts and salary trends by month and job segment.
+  - name: mart_skill_demand
+    description: Share of current postings requesting each tracked skill.
+    columns:
+      - name: skill_name
+        data_tests: [unique, not_null]
+  - name: mart_company_activity
+    description: Employer-level current and early-career hiring activity.

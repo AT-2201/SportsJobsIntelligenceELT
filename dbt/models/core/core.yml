@@ -1,0 +1,57 @@
+version: 2
+
+models:
+  - name: dim_company
+    description: One row per normalized employer.
+    columns:
+      - name: company_key
+        data_tests: [unique, not_null]
+  - name: dim_location
+    description: One row per normalized job location.
+    columns:
+      - name: location_key
+        data_tests: [unique, not_null]
+  - name: dim_skill
+    description: Skills detected in titles and job descriptions.
+    columns:
+      - name: skill_key
+        data_tests: [unique, not_null]
+  - name: fct_job_postings
+    description: One row per currently known source job posting.
+    columns:
+      - name: job_id
+        data_tests: [unique, not_null]
+      - name: company_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_company')
+                field: company_key
+      - name: location_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_location')
+                field: location_key
+  - name: bridge_job_skills
+    description: Many-to-many relationship between postings and detected skills.
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "job_id || '-' || skill_key"
+    columns:
+      - name: job_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('fct_job_postings')
+                field: job_id
+      - name: skill_key
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_skill')
+                field: skill_key
+

@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: job_posting_events
+        loaded_at_field: ingested_at
+        config:
+          freshness:
+            warn_after: {count: 36, period: hour}
+            error_after: {count: 72, period: hour}
+        columns:
+          - name: event_id
+            data_tests: [unique, not_null]
+          - name: source
+            data_tests: [not_null]
+          - name: source_job_id
+            data_tests: [not_null]
+          - name: content_hash
+            data_tests: [not_null]
+
