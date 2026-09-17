@@ -112,6 +112,32 @@ The Prefect flow can be served or deployed on any schedule supported by Prefect.
 daily 6:00 AM deployment is a sensible production default. The included CI workflow
 runs lint, unit tests, a real PostgreSQL ingestion, every dbt model, and every data test.
 
+### Run the local daily schedule
+
+Start the persistent Prefect API and UI in one terminal:
+
+```bash
+prefect server start
+```
+
+Point the local profile at that API, then start the live flow runner in a second terminal:
+
+```bash
+prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api
+INGESTION_MODE=live python -m orchestration.serve
+```
+
+The deployment runs each day at 6:00 AM in the `America/Phoenix` timezone. While the
+runner is active, a run can also be requested immediately from a third terminal:
+
+```bash
+prefect deployment run 'sports-jobs-daily/sports-jobs-daily-local'
+```
+
+Open `http://127.0.0.1:4200` to inspect scheduled, running, completed, and failed runs.
+The local runner must remain active to execute scheduled work; it pauses the deployment
+when shut down cleanly.
+
 ## Data quality controls
 
 - Required and unique job identifiers
