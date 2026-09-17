@@ -39,7 +39,9 @@ services:
         condition: service_healthy
     ports:
       - "3000:3000"
+    volumes:
+      - metabase_data:/metabase.db
 
 volumes:
   postgres_data:
-
+  metabase_data:
