@@ -71,7 +71,15 @@ dbt prefixes the configured schemas with its target schema (`analytics`), produc
 
 ## Use live sources
 
-Edit `config/sources.yml` and add enabled public board identifiers:
+The included source configuration contains verified public boards for Hudl (Greenhouse)
+and Veo (Lever). Fixture mode remains the default and makes no external requests. Run
+the complete pipeline against the public boards with:
+
+```bash
+INGESTION_MODE=live sports-jobs pipeline
+```
+
+To add other organizations, edit `config/sources.yml` with their public board identifiers:
 
 ```yaml
 sources:
@@ -85,8 +93,10 @@ sources:
     enabled: true
 ```
 
-Then set `INGESTION_MODE=live`. Company career pages can move or change terms, so only
-enable boards you have verified and whose access rules permit automated retrieval.
+Company career pages can move or change terms, so only enable boards you have verified
+and whose access rules permit automated retrieval. Raw responses are retained for audit,
+while general talent-community and resume-registration pages are excluded from curated
+job analytics.
 
 ## Operate and test
 

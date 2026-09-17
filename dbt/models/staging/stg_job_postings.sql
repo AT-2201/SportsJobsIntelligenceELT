@@ -18,9 +18,14 @@ cleaned as (
         nullif(trim(location_text), '') as location_text,
         nullif(trim(description), '') as description,
         coalesce(nullif(trim(employment_type), ''), 'Unknown') as employment_type,
-        coalesce(nullif(initcap(trim(workplace_type)), ''),
-            case when lower(coalesce(location_text, '')) like '%remote%' then 'Remote' else 'Unknown' end
-        ) as workplace_type,
+        case
+            when lower(trim(workplace_type)) = 'remote' then 'Remote'
+            when lower(trim(workplace_type)) = 'hybrid' then 'Hybrid'
+            when regexp_replace(lower(trim(workplace_type)), '[^a-z]', '', 'g') = 'onsite'
+                then 'On-site'
+            when lower(coalesce(location_text, '')) like '%remote%' then 'Remote'
+            else 'Unknown'
+        end as workplace_type,
         salary_min,
         salary_max,
         coalesce(salary_currency, 'USD') as salary_currency,
@@ -32,7 +37,7 @@ cleaned as (
         ingested_at
     from ranked
     where recency_rank = 1
+      and lower(trim(title)) !~ '(talent community|candidate data base|register your cv)'
 )
 
 select * from cleaned
-

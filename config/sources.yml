@@ -6,13 +6,12 @@ sources:
     path: data/fixtures/jobs.json
     enabled: true
 
-  # Example live sources. Verify each organization token before enabling it.
-  # - name: example_greenhouse
-  #   type: greenhouse
-  #   board_token: organization-board-token
-  #   enabled: true
-  # - name: example_lever
-  #   type: lever
-  #   site: organization-site-token
-  #   enabled: true
+  - name: hudl
+    type: greenhouse
+    board_token: hudl
+    enabled: true
 
+  - name: veo
+    type: lever
+    site: veo
+    enabled: true

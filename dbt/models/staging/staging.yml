@@ -14,5 +14,4 @@ models:
         data_tests:
           - accepted_values:
               arguments:
-                values: ["Remote", "Hybrid", "On-Site", "On-site", "Unknown"]
-
+                values: ["Remote", "Hybrid", "On-site", "Unknown"]

@@ -21,6 +21,24 @@ models:
     columns:
       - name: job_id
         data_tests: [unique, not_null]
+      - name: role_family
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - Data Engineering
+                  - Data Science / ML
+                  - Business Intelligence
+                  - Analytics
+                  - Hardware / Embedded
+                  - IT / Security
+                  - Product
+                  - Software Engineering
+                  - Sales / Business Development
+                  - Customer Success / Consulting
+                  - Operations / Supply Chain
+                  - Other
       - name: company_key
         data_tests:
           - not_null
@@ -54,4 +72,3 @@ models:
               arguments:
                 to: ref('dim_skill')
                 field: skill_key
-

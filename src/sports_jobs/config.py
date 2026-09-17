@@ -45,4 +45,10 @@ class Settings:
         sources = [source for source in values.get("sources", []) if source.get("enabled", True)]
         if self.ingestion_mode == "fixture":
             return [source for source in sources if source.get("type") == "fixture"]
-        return sources
+        if self.ingestion_mode == "live":
+            return [
+                source
+                for source in sources
+                if source.get("type") in {"greenhouse", "lever"}
+            ]
+        raise ValueError(f"Unsupported INGESTION_MODE: {self.ingestion_mode}")
